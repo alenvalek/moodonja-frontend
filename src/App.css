@@ -1,4 +1,43 @@
-*, *::after, *::before {
-  margin: 0;
-  padding: 0;
+@import url("https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Roboto", sans-serif;
+	background-color: #63a4ff;
+	background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+	min-height: 100vh;
+}
+
+.btn {
+	font-size: 1rem;
+	border: none;
+	outline: none;
+	border-radius: 0.2rem;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	color: rgba(255, 255, 255, 0.9);
+	transition: all 200ms ease-in;
+}
+
+.btn-primary {
+	background-color: rgba(99, 164, 255, 1);
+}
+
+.btn-primary:hover {
+	background-color: rgb(50, 135, 255);
+}
+
+.btn-secondary {
+	background-color: rgb(223, 223, 223);
+	color: black;
+}
+
+.btn-secondary:hover {
+	background-color: rgb(184, 184, 184);
 }

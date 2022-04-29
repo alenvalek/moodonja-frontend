@@ -1,0 +1,29 @@
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+		url("C:/Users/Alen/moodonja/client/public/images/talking.png");
+
+	background-repeat: no-repeat;
+	background-position: center;
+	text-align: center;
+}
+
+.container__card {
+	display: flex;
+	flex-direction: column;
+}
+
+.container__card__item {
+	margin: 1rem;
+}
+
+.container__card__actions {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 2rem;
+}

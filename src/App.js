@@ -1,11 +1,17 @@
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Landing from "./components/layout/Landing/Landing";
+import Navbar from "./components/layout/Navbar/Navbar";
 
-function App() {
+const App = () => {
 	return (
-		<div className='App'>
-			<h1>Hello world</h1>
-		</div>
+		<>
+			<Navbar />
+			<Routes>
+				<Route path='/' element={<Landing />} />
+			</Routes>
+		</>
 	);
-}
+};
 
 export default App;
