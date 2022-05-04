@@ -1,0 +1,24 @@
+form {
+	width: 70%;
+	margin: 6rem auto;
+}
+
+.form__group {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 1.2rem 0;
+	width: 100%;
+}
+
+.form__group input {
+	padding: 0.4rem;
+	font-size: 1.2rem;
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 0.2rem;
+}
+
+.form__group input:focus {
+	outline: none;
+}

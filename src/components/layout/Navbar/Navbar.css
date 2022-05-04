@@ -1,8 +1,5 @@
-nav {
-	position: fixed;
-	width: 100%;
-}
 .nav__list {
+	width: 99.8%;
 	background: white;
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	margin: 0.1rem;
@@ -11,6 +8,9 @@ nav {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
+	position: fixed;
+	top: 0;
+	z-index: 1030;
 }
 
 .nav__list__item {
@@ -27,7 +27,7 @@ nav {
 }
 
 .nav__list__item a:hover {
-	color: rgb(50, 135, 255);
+	color: var(--clr-primary-darken);
 }
 
 /* alone */
@@ -39,4 +39,10 @@ nav {
 	-webkit-user-select: none;
 	-webkit-touch-callout: none;
 	-ms-user-select: none;
+	cursor: pointer;
+	transition: all 200ms ease-in;
+}
+
+.nav__list__item:first-child:hover {
+	color: var(--clr-primary-darken);
 }

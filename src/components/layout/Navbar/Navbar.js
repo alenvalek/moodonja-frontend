@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../../App.css";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -21,7 +20,7 @@ const Navbar = () => {
 						<Link to='/'>Prijava</Link>
 					</li>
 					<li class='nav__list__item'>
-						<Link to='/'>
+						<Link to='/register'>
 							<button class='btn btn-primary'>Kreiraj račun</button>
 						</Link>
 					</li>

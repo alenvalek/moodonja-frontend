@@ -1,3 +1,10 @@
+.body {
+	height: 100%;
+	width: 100%;
+	background-color: #63a4ff;
+	background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
+}
+
 .container {
 	display: flex;
 	align-items: center;
@@ -10,7 +17,6 @@
 	background-position: center;
 	text-align: center;
 }
-
 .container__card {
 	display: flex;
 	flex-direction: column;
