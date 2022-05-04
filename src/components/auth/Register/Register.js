@@ -28,10 +28,12 @@ const Register = () => {
 						name='password2'
 					/>
 				</div>
-				<button className='btn btn-primary'>Registriraj me</button>
+				<button style={{ marginBottom: "1rem" }} className='btn btn-primary'>
+					Registriraj me
+				</button>
 				<p>
 					Već imate račun?{" "}
-					<Link className='text-primary' to='login'>
+					<Link className=' text-primary' to='/login'>
 						Prijava
 					</Link>
 				</p>
