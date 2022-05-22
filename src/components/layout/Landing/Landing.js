@@ -24,7 +24,7 @@ const Landing = () => {
 					</div>
 					<div className='container__card__actions'>
 						<Link to='/register'>
-							<button className='btn btn-primary'>Prijavi se</button>
+							<button className='btn btn-primary'>Registriraj se</button>
 						</Link>
 						<Link to='/login'>
 							<button className='btn btn-secondary'>Prijavi se</button>

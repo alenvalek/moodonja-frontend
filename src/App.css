@@ -24,6 +24,7 @@ body {
 	--clr-secondary: rgb(223, 223, 223);
 	--clr-secondary-darken: rgb(184, 184, 184);
 }
+
 a {
 	color: var(--primary-color);
 	text-decoration: none;
