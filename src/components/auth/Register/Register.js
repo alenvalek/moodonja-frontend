@@ -95,8 +95,8 @@ const Register = () => {
 					</Link>
 				</p>
 				{errors.length > 0 &&
-					errors.map((error) => (
-						<Alert variant='filled' severity='error'>
+					errors.map((error, index) => (
+						<Alert key={index} variant='filled' severity='error'>
 							{error}
 						</Alert>
 					))}

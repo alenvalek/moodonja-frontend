@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Alert } from "@mui/material";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -61,6 +62,12 @@ const Login = () => {
 						Registrirajte se
 					</Link>
 				</p>
+				{errors.length > 0 &&
+					errors.map((error, index) => (
+						<Alert key={index} variant='filled' severity='error'>
+							{error}
+						</Alert>
+					))}
 			</form>
 		</div>
 	);
