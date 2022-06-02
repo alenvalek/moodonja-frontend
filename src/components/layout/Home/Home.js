@@ -1,15 +1,27 @@
+import { Button, Grid } from "@mui/material";
 import React from "react";
-import "./Home.css";
+import "./Home.module.css";
 
 const Home = () => {
 	return (
-		<div className='content__container'>
-			<h1 className='heading text-primary'>Odaberite opciju:</h1>
-			<div className='btn__container'>
-				<button className='btn btn-primary'>Nudim Pomoć</button>
-				<button className='btn btn-primary'>Trebam Pomoć</button>
-			</div>
-		</div>
+		<Grid
+			minHeight='100vh'
+			container
+			display='flex'
+			justifyContent='center'
+			alignItems='center'
+			spacing={5}>
+			<Grid item>
+				<Button variant='contained' color='primary'>
+					Nudi pomoć
+				</Button>
+			</Grid>
+			<Grid item>
+				<Button variant='contained' color='primary'>
+					Traži pomoć
+				</Button>
+			</Grid>
+		</Grid>
 	);
 };
 
