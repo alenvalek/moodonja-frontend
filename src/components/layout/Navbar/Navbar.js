@@ -1,11 +1,12 @@
-import { Avatar } from "@mui/material";
-import React, { useState } from "react";
+import { Avatar, Button } from "@mui/material";
+import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
 import "./Navbar.css";
+import { logoutUser } from "../../../actions/auth";
 
-const Navbar = () => {
-	const [user, setUser] = useState(false);
-
+const Navbar = ({ isAuth, userLoading, logoutUser }) => {
 	const loggedOutNav = (
 		<>
 			<nav>
@@ -48,12 +49,45 @@ const Navbar = () => {
 					<li className='nav__list__item'>
 						<Link to='/'>Prijatelji</Link>
 					</li>
-					<Avatar style={{ marginRight: "1rem" }}>JD</Avatar>
+					<li className='nav__list__item'>
+						<Avatar>JD</Avatar>
+					</li>
+					<li className='nav__list__item'>
+						<Button
+							onClick={logoutUser}
+							variant='contained'
+							color='error'
+							endIcon={<LogoutIcon />}>
+							Odjava
+						</Button>
+					</li>
 				</ul>
 			</nav>
 		</>
 	);
-	return user ? loggedInNav : loggedOutNav;
+
+	const navBlank = (
+		<nav>
+			<ul className='nav__list'>
+				<ul className='nav__list'>
+					<li className='nav__list__item'>
+						<h3>: ) :</h3>
+					</li>
+					<li className='nav__list__item'></li>
+					<li className='nav__list__item'></li>
+					<li className='nav__list__item'></li>
+					<li className='nav__list__item'></li>
+				</ul>
+			</ul>
+		</nav>
+	);
+
+	return !userLoading ? (isAuth ? loggedInNav : loggedOutNav) : navBlank;
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+	isAuth: state.auth.isAuth,
+	userLoading: state.auth.loading,
+});
+
+export default connect(mapStateToProps, { logoutUser })(Navbar);

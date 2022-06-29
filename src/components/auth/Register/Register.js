@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Register.css";
 import Alert from "@mui/material/Alert";
+import { connect } from "react-redux";
+import { registerUser } from "../../../actions/auth";
 
-const Register = () => {
+const Register = ({ registerUser }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -17,7 +19,7 @@ const Register = () => {
 		setPasswordConfirm("");
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		errors.length = 0;
 		if (!username || !password || !passwordConfirm || !email) {
@@ -28,13 +30,17 @@ const Register = () => {
 			clearForm();
 			return setErrors([...errors, "Lozinke se ne podudaraju"]);
 		}
-		const newUser = {
-			username,
-			email,
-			password,
-		};
 
-		console.log(newUser);
+		try {
+			const newUser = {
+				username,
+				email,
+				password,
+			};
+			await registerUser(newUser);
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
@@ -105,4 +111,8 @@ const Register = () => {
 	);
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+	isAuth: state.auth.isAuth,
+});
+
+export default connect(mapStateToProps, { registerUser })(Register);

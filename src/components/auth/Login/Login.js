@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Alert } from "@mui/material";
+import { connect } from "react-redux";
+import { loginUser } from "../../../actions/auth";
 
-const Login = () => {
+const Login = ({ loginUser }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errors, setErrors] = useState([]);
@@ -20,12 +22,7 @@ const Login = () => {
 			return setErrors([...errors, "Sva polja moraju biti ispunjena"]);
 		}
 
-		const formData = {
-			email,
-			password,
-		};
-
-		console.log(formData);
+		loginUser({ email, password });
 	};
 
 	return (
@@ -73,4 +70,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default connect(null, { loginUser })(Login);
