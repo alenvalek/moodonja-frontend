@@ -1,6 +1,4 @@
 .body {
-	height: 100%;
-	width: 100%;
 	background-color: #63a4ff;
 	background-image: linear-gradient(315deg, #63a4ff 0%, #83eaf1 74%);
 }
@@ -9,11 +7,11 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	min-height: 95vh;
 	background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url("C:/Users/Alen/moodonja/client/public/images/talking.png");
 
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-position: center;
 	text-align: center;
 }

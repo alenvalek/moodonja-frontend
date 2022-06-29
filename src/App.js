@@ -23,18 +23,19 @@ const App = () => {
 
 	return (
 		<Provider store={store}>
-			(
 			<>
 				<Navbar />
+
 				<Routes>
 					<Route
 						index
 						element={
-							<GuestRoute>
+							<GuestRoute isLanding={true}>
 								<Landing />
 							</GuestRoute>
 						}
 					/>
+
 					<Route
 						path='/register'
 						element={
@@ -43,6 +44,7 @@ const App = () => {
 							</GuestRoute>
 						}
 					/>
+
 					<Route
 						path='/login'
 						element={
@@ -61,7 +63,6 @@ const App = () => {
 					/>
 				</Routes>
 			</>
-			)
 		</Provider>
 	);
 };

@@ -1,12 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { connect } from "react-redux";
+import { Container } from "@mui/material";
 
 const ProtectedRoute = ({ children, isAuth, userLoading }) => {
 	if (!isAuth && !userLoading) {
 		return <Navigate to='/' replace />;
 	}
-	return children;
+	return <Container>{children}</Container>;
 };
 
 const mapStateToProps = (state) => ({
