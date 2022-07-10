@@ -19,10 +19,11 @@ const Login = ({ loginUser }) => {
 		errors.length = 0;
 		if (!password || !email) {
 			clearForm();
-			return setErrors([...errors, "Sva polja moraju biti ispunjena"]);
+			setErrors([...errors, "Sva polja moraju biti ispunjena"]);
+			return setTimeout(() => setErrors([]), 5000);
 		}
 
-		loginUser({ email, password });
+		loginUser(email, password);
 	};
 
 	return (

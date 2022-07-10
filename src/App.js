@@ -15,6 +15,7 @@ import { loadUser } from "./actions/auth";
 // route helpers
 import GuestRoute from "./components/auth/GuestRoute";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import PostDetails from "./components/layout/Posts/PostDetails";
 
 const App = () => {
 	useEffect(() => {
@@ -58,6 +59,14 @@ const App = () => {
 						element={
 							<ProtectedRoute>
 								<Home />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/post/:id'
+						element={
+							<ProtectedRoute>
+								<PostDetails />
 							</ProtectedRoute>
 						}
 					/>
