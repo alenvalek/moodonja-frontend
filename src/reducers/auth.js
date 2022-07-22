@@ -15,6 +15,7 @@ const initialState = {
 	isAuth: null,
 	loading: true,
 	user: null,
+	errors: [],
 };
 
 export default function (state = initialState, action) {
@@ -37,6 +38,7 @@ export default function (state = initialState, action) {
 				...payload,
 				isAuth: true,
 				loading: false,
+				errors: [],
 			};
 		case REGISTER_FAIL:
 		case AUTH_FAIL:
@@ -48,6 +50,7 @@ export default function (state = initialState, action) {
 				token: null,
 				isAuth: false,
 				loading: false,
+				errors: payload,
 			};
 		default:
 			return state;

@@ -10,8 +10,9 @@ import {
 } from "./types";
 
 // fetch/auth user from backend
-export const loadUser = async (dispatch) => {
+export const loadUser = () => async (dispatch) => {
 	const token = localStorage.getItem("token");
+	console.log("loading user..");
 	if (token) {
 		axios.defaults.headers.common["x-auth-token"] = token;
 	} else {
@@ -20,6 +21,7 @@ export const loadUser = async (dispatch) => {
 
 	try {
 		const res = await axios.get("http://localhost:5000/auth");
+		console.log(res.data);
 
 		dispatch({
 			type: LOAD_USER,
@@ -53,9 +55,11 @@ export const registerUser =
 				type: REGISTER_SUCCESS,
 				payload: res.data,
 			});
+			dispatch(loadUser());
 		} catch (error) {
 			dispatch({
 				type: REGISTER_FAIL,
+				payload: error.response.data.errors,
 			});
 			console.log(error);
 		}
@@ -80,9 +84,11 @@ export const loginUser =
 				type: LOGIN_SUCCESS,
 				payload: res.data,
 			});
+			dispatch(loadUser());
 		} catch (error) {
 			dispatch({
 				type: LOGIN_FAIL,
+				payload: error.response.data.errors,
 			});
 		}
 	};

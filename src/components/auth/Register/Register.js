@@ -5,12 +5,11 @@ import Alert from "@mui/material/Alert";
 import { connect } from "react-redux";
 import { registerUser } from "../../../actions/auth";
 
-const Register = ({ registerUser }) => {
+const Register = ({ registerUser, errors }) => {
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
-	const [errors, setErrors] = useState([]);
 
 	const clearForm = () => {
 		setUsername("");
@@ -21,15 +20,6 @@ const Register = ({ registerUser }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		errors.length = 0;
-		if (!username || !password || !passwordConfirm || !email) {
-			clearForm();
-			return setErrors([...errors, "Sva polja moraju biti ispunjena"]);
-		}
-		if (password !== passwordConfirm) {
-			clearForm();
-			return setErrors([...errors, "Lozinke se ne podudaraju"]);
-		}
 
 		try {
 			const newUser = {
@@ -100,10 +90,15 @@ const Register = ({ registerUser }) => {
 						Prijava
 					</Link>
 				</p>
-				{errors.length > 0 &&
+				{errors &&
+					errors.length > 0 &&
 					errors.map((error, index) => (
-						<Alert key={index} variant='filled' severity='error'>
-							{error}
+						<Alert
+							key={index}
+							variant='filled'
+							severity='error'
+							sx={{ marginBottom: "1rem" }}>
+							{error.msg}
 						</Alert>
 					))}
 			</form>
@@ -113,6 +108,7 @@ const Register = ({ registerUser }) => {
 
 const mapStateToProps = (state) => ({
 	isAuth: state.auth.isAuth,
+	errors: state.auth.errors,
 });
 
 export default connect(mapStateToProps, { registerUser })(Register);

@@ -9,17 +9,20 @@ import Home from "./components/layout/Home/Home";
 
 // REDUX state managment
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store.js";
 import { loadUser } from "./actions/auth";
 
 // route helpers
 import GuestRoute from "./components/auth/GuestRoute";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PostDetails from "./components/layout/Posts/PostDetails";
+import Dashboard from "./components/layout/Dashboard/Dashboard";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
 	useEffect(() => {
-		store.dispatch(loadUser);
+		store.dispatch(loadUser());
 	}, []);
 
 	return (
@@ -70,7 +73,17 @@ const App = () => {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+						path='/dashboard'
+						element={
+							<ProtectedRoute>
+								<Dashboard />
+							</ProtectedRoute>
+						}
+					/>
 				</Routes>
+
+				<ToastContainer theme='colored' />
 			</>
 		</Provider>
 	);

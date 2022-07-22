@@ -6,7 +6,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import "./Navbar.css";
 import { logoutUser } from "../../../actions/auth";
 
-const Navbar = ({ isAuth, userLoading, logoutUser }) => {
+const Navbar = ({ isAuth, userLoading, user, logoutUser }) => {
 	const loggedOutNav = (
 		<>
 			<nav>
@@ -44,13 +44,13 @@ const Navbar = ({ isAuth, userLoading, logoutUser }) => {
 						<Link to='/home'>Početna</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Link to='/'>Dashboard</Link>
+						<Link to='/dashboard'>Dashboard</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Link to='/'>Prijatelji</Link>
+						<Link to='/friends'>Prijatelji</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Avatar>JD</Avatar>
+						<Avatar>{user && user.username[0].toUpperCase()}</Avatar>
 					</li>
 					<li className='nav__list__item'>
 						<Button
@@ -88,6 +88,7 @@ const Navbar = ({ isAuth, userLoading, logoutUser }) => {
 const mapStateToProps = (state) => ({
 	isAuth: state.auth.isAuth,
 	userLoading: state.auth.loading,
+	user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { logoutUser })(Navbar);

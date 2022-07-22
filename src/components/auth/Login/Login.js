@@ -4,11 +4,9 @@ import { Alert } from "@mui/material";
 import { connect } from "react-redux";
 import { loginUser } from "../../../actions/auth";
 
-const Login = ({ loginUser }) => {
+const Login = ({ loginUser, errors }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [errors, setErrors] = useState([]);
-
 	const clearForm = () => {
 		setEmail("");
 		setPassword("");
@@ -16,14 +14,8 @@ const Login = ({ loginUser }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		errors.length = 0;
-		if (!password || !email) {
-			clearForm();
-			setErrors([...errors, "Sva polja moraju biti ispunjena"]);
-			return setTimeout(() => setErrors([]), 5000);
-		}
 
-		loginUser(email, password);
+		loginUser({ email, password });
 	};
 
 	return (
@@ -60,10 +52,11 @@ const Login = ({ loginUser }) => {
 						Registrirajte se
 					</Link>
 				</p>
-				{errors.length > 0 &&
+				{errors &&
+					errors.length > 0 &&
 					errors.map((error, index) => (
 						<Alert key={index} variant='filled' severity='error'>
-							{error}
+							{error.msg}
 						</Alert>
 					))}
 			</form>
@@ -71,4 +64,8 @@ const Login = ({ loginUser }) => {
 	);
 };
 
-export default connect(null, { loginUser })(Login);
+const mapStateToProps = (state) => ({
+	errors: state.auth.errors,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
