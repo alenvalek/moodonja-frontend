@@ -19,6 +19,7 @@ import PostDetails from "./components/layout/Posts/PostDetails";
 import Dashboard from "./components/layout/Dashboard/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Chat from "./components/layout/Chat/Chat";
 
 const App = () => {
 	useEffect(() => {
@@ -70,6 +71,14 @@ const App = () => {
 						element={
 							<ProtectedRoute>
 								<PostDetails />
+							</ProtectedRoute>
+						}
+					/>
+					<Route
+						path='/chat'
+						element={
+							<ProtectedRoute>
+								<Chat />
 							</ProtectedRoute>
 						}
 					/>

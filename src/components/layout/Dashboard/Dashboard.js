@@ -5,7 +5,7 @@ import styles from "./Dashboard.module.css";
 import { connect } from "react-redux";
 import { loadUser } from "../../../actions/auth";
 import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Dashboard = ({ user, loading }) => {
 	const [newImage, setNewImage] = useState("");
@@ -23,7 +23,7 @@ const Dashboard = ({ user, loading }) => {
 
 	const handleSubmit = async () => {
 		try {
-			await axios.patch("http://localhost:5000/userss", {
+			await axios.patch("http://localhost:5000/users", {
 				bio: editableBio,
 				username: editableUsername,
 			});
