@@ -1,38 +1,75 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { connect } from "react-redux";
 import PostCard from "./PostCard";
+import axios from "axios";
 
-const PostCardList = () => {
-	const tempPosts = [
-		{
-			id: 1,
-			body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur suscipit, tellus nec sodales luctus, neque velit iaculis magna, at suscipit diam diam convallis nisl. In sit amet dolor felis. ",
-			postImg: "test",
-			postLocation: "Varazdin, Croatia",
-			postTags: [{ friendID: "fdsafnga" }],
-		},
-		{
-			id: 2,
-			body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur suscipit, tellus nec sodales luctus, neque velit iaculis magna, at suscipit diam diam convallis nisl. In sit amet dolor felis. ",
-			postImg: "test",
-			postLocation: "Varazdin, Croatia",
-			postTags: [],
-		},
-		{
-			id: 3,
-			body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur suscipit, tellus nec sodales luctus, neque velit iaculis magna, at suscipit diam diam convallis nisl. In sit amet dolor felis. ",
-			postImg: "test",
-			postLocation: "Zagreb, Croatia",
-			postTags: [],
-		},
-	];
+const PostCardList = ({ user, posts, setPosts }) => {
+	const removePost = async (postID) => {
+		try {
+			await axios.delete(`http://localhost:5000/posts/${postID}`);
+			let modified = posts.filter((post) => post._id !== postID);
+			setPosts(modified);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const editPost = async ({ postID, body }) => {
+		try {
+			const res = await axios.patch(`http://localhost:5000/posts/${postID}`, {
+				body,
+			});
+			let modified = posts.map((post) =>
+				post._id === postID ? res.data : post
+			);
+			setPosts(modified);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const updateLikes = async (postID) => {
+		try {
+			const res = await axios.patch(
+				`http://localhost:5000/posts/like/${postID}`
+			);
+			let modified = posts.map((post) =>
+				post._id === postID ? { ...post, postLikes: res.data } : post
+			);
+
+			setPosts(modified);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<Grid marginTop={4}>
-			{tempPosts.map((post) => (
-				<PostCard key={post.id} body={post.body} />
-			))}
+			{posts && posts.length > 0 ? (
+				posts.map((post) => (
+					<PostCard
+						key={post._id}
+						id={post._id}
+						updateLikes={updateLikes}
+						removePost={removePost}
+						editPost={editPost}
+						body={post.body}
+						username={post.author.username}
+						postedAt={post.createdAt}
+						likeCount={post.postLikes.length}
+						isUserAuthor={post.author._id === user._id}
+						isPostLiked={post.postLikes.some((like) => like.user === user._id)}
+					/>
+				))
+			) : (
+				<Typography variant='h3'>Nema novih postova 😥</Typography>
+			)}
 		</Grid>
 	);
 };
 
-export default PostCardList;
+const mapStateToProps = (state) => ({
+	user: state.auth.user,
+});
+
+export default connect(mapStateToProps, {})(PostCardList);
