@@ -104,13 +104,13 @@ const Chat = ({ user }) => {
 			setSentFriendRequest(false);
 		});
 
-		return () => {
-			if (recepient) {
-				socket.emit("private-chat-disconnect", {
-					socketID: recepient.recepient.socketID,
-				});
-			}
-		};
+		// return () => {
+		// 	if (recepient) {
+		// 		socket.emit("private-chat-disconnect", {
+		// 			socketID: recepient.recepient.socketID,
+		// 		});
+		// 	}
+		// };
 	}, [messages]);
 
 	// scroll do dna
