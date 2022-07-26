@@ -241,8 +241,8 @@ const PostDetails = ({ user }) => {
 						<CardContent>
 							<Grid container alignContent='space-between' alignItems='center'>
 								<Grid item xs={2} md={1}>
-									{post.author.photoURL ? (
-										<Avatar variant='rounded' src={post.author.photoURL} />
+									{user && user.photoURL ? (
+										<Avatar variant='rounded' src={user.photoUrl} />
 									) : (
 										<Avatar variant='rounded'>
 											{user.username[0].toUpperCase()}
