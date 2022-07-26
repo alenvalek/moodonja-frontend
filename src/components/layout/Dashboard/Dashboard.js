@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 
 const Dashboard = ({ user, loading }) => {
 	const [newImage, setNewImage] = useState("");
+	const [imageFile, setImageFile] = useState(null);
+	const [isSettingNewImage, setIsSettingNewImage] = useState(false);
 	const [editableUsername, setEditableUsername] = useState("");
 	const [editableBio, setEditableBio] = useState("");
 	const handleUpload = (e) => {
@@ -19,14 +21,30 @@ const Dashboard = ({ user, loading }) => {
 			}
 		};
 		reader.readAsDataURL(e.target.files[0]);
+		setIsSettingNewImage(true);
+		setImageFile(e.target.files[0]);
 	};
 
 	const handleSubmit = async () => {
 		try {
-			await axios.patch("/users", {
+			const formData = new FormData();
+			formData.append("file", imageFile);
+			formData.append("upload_preset", "moodonja_preset");
+
+			const imgData = await fetch(
+				"https://api.cloudinary.com/v1_1/moodonja/image/upload",
+				{
+					method: "POST",
+					body: formData,
+				}
+			).then((r) => r.json());
+
+			let newUserData = {
 				bio: editableBio,
 				username: editableUsername,
-			});
+			};
+			if (imgData) newUserData.photoURL = imgData.secure_url;
+			await axios.patch("/users", newUserData);
 			toast.success("Successfully updated your profile! 🤩", {
 				position: "bottom-right",
 				autoClose: 5000,
@@ -36,6 +54,7 @@ const Dashboard = ({ user, loading }) => {
 				draggable: true,
 				progress: undefined,
 			});
+			setIsSettingNewImage(false);
 		} catch (error) {
 			toast.error("Something went wrong.. 😥", {
 				position: "bottom-right",
@@ -54,8 +73,8 @@ const Dashboard = ({ user, loading }) => {
 		if (user) {
 			setEditableUsername(user.username);
 			setEditableBio(user.bio || "");
+			setImageFile(user.photoUrl || null);
 		}
-		console.log(user);
 	}, [user]);
 
 	return (
@@ -68,15 +87,20 @@ const Dashboard = ({ user, loading }) => {
 				alignItems='center'
 				textAlign='center'>
 				<Grid item xs={12} md={12} sx={{ marginTop: "1rem" }}>
-					<img
-						className={styles.image}
-						alt='profile'
-						src={
-							newImage
-								? newImage
-								: "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
-						}
-					/>
+					{isSettingNewImage && newImage && (
+						<img className={styles.image} alt='profile' src={newImage} />
+					)}
+					{!isSettingNewImage && !newImage && (
+						<img
+							className={styles.image}
+							alt='profile'
+							src={
+								user && user.photoURL
+									? user.photoURL
+									: "https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+							}
+						/>
+					)}
 				</Grid>
 				<Grid item xs={12} md={12}>
 					<Typography variant='h3'>

@@ -47,7 +47,9 @@ const Navbar = ({ isAuth, userLoading, user, logoutUser }) => {
 						<Link to='/chat'>Chat</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Avatar>{user && user.username[0].toUpperCase()}</Avatar>
+						<Avatar src={user && user.photoURL}>
+							{user && !user.photoURL && user.username[0].toUpperCase()}
+						</Avatar>
 					</li>
 					<li className='nav__list__item'>
 						<Button

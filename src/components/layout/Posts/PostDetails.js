@@ -198,7 +198,13 @@ const PostDetails = ({ user }) => {
 					<Card>
 						<CardHeader
 							style={{ textAlign: "left" }}
-							avatar={<Avatar>{post.author.username[0].toUpperCase()}</Avatar>}
+							avatar={
+								post.author.photoURL ? (
+									<Avatar src={post.author.photoURL} />
+								) : (
+									<Avatar>{post.author.username[0].toUpperCase()}</Avatar>
+								)
+							}
 							action={
 								user &&
 								user._id === post.author._id && (
@@ -235,9 +241,13 @@ const PostDetails = ({ user }) => {
 						<CardContent>
 							<Grid container alignContent='space-between' alignItems='center'>
 								<Grid item xs={2} md={1}>
-									<Avatar variant='rounded'>
-										{user.username[0].toUpperCase()}
-									</Avatar>
+									{user && user.photoURL ? (
+										<Avatar variant='rounded' src={user.photoUrl} />
+									) : (
+										<Avatar variant='rounded'>
+											{user.username[0].toUpperCase()}
+										</Avatar>
+									)}
 								</Grid>
 								<Grid item xs={7} md={9}>
 									<TextField
@@ -268,9 +278,14 @@ const PostDetails = ({ user }) => {
 										marginBottom={1}
 										container
 										alignItems='center'>
-										<Avatar variant='rounded'>
-											{comment.user.username[0].toUpperCase()}
-										</Avatar>
+										{comment.user.photoURL ? (
+											<Avatar variant='rounded' src={comment.user.photoURL} />
+										) : (
+											<Avatar variant='rounded'>
+												{comment.user.username[0].toUpperCase()}
+											</Avatar>
+										)}
+
 										<Grid marginLeft={1} item xs={2} md={1}>
 											<Typography variant='subtitle1'>
 												{comment.user.username}
