@@ -54,8 +54,6 @@ const Dashboard = ({ user, loading }) => {
 				draggable: true,
 				progress: undefined,
 			});
-			setIsSettingNewImage(false);
-			setNewImage("");
 		} catch (error) {
 			toast.error("Something went wrong.. 😥", {
 				position: "bottom-right",
@@ -66,8 +64,6 @@ const Dashboard = ({ user, loading }) => {
 				draggable: true,
 				progress: undefined,
 			});
-			setIsSettingNewImage(false);
-			setNewImage("");
 		}
 		loadUser();
 	};
