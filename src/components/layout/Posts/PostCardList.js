@@ -82,6 +82,7 @@ const PostCardList = ({ user, posts, setPosts }) => {
 						editPost={editPost}
 						body={post.body}
 						username={post.author.username}
+						photoURL={post.author.photoURL}
 						postedAt={post.createdAt}
 						likeCount={post.postLikes.length}
 						isUserAuthor={post.author._id === user._id}

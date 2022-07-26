@@ -36,6 +36,7 @@ const PostCard = ({
 	isUserAuthor,
 	removePost,
 	editPost,
+	photoURL,
 }) => {
 	const [anchorEl, setAnchorElement] = useState(null);
 	const open = Boolean(anchorEl);
@@ -76,7 +77,13 @@ const PostCard = ({
 				<Card>
 					<CardHeader
 						style={{ textAlign: "left" }}
-						avatar={<Avatar>{username[0].toUpperCase()}</Avatar>}
+						avatar={
+							photoURL ? (
+								<Avatar src={photoURL} />
+							) : (
+								<Avatar>{username[0].toUpperCase()}</Avatar>
+							)
+						}
 						action={
 							isUserAuthor && (
 								<>
