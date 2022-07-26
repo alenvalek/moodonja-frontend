@@ -11,14 +11,13 @@ import {
 	Button,
 	CircularProgress,
 } from "@mui/material";
-import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import PostCardList from "../Posts/PostCardList";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 const Home = ({ user }) => {
 	const [posts, setPosts] = useState([]);
@@ -26,7 +25,7 @@ const Home = ({ user }) => {
 
 	const fetchPosts = async () => {
 		try {
-			const res = await axios.get("http://localhost:5000/posts");
+			const res = await axios.get("/posts");
 			setPosts(res.data);
 			setLoading(false);
 		} catch (error) {
@@ -39,10 +38,28 @@ const Home = ({ user }) => {
 		if (isLocation) newPost.postLocation = location;
 		newPost.body = body;
 		try {
-			const res = await axios.post("http://localhost:5000/posts", newPost);
+			const res = await axios.post("/posts", newPost);
 			setPosts([res.data, ...posts]);
+			toast.success("Uspješno dodan novi post! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 

@@ -2,11 +2,12 @@ import { Grid, Typography } from "@mui/material";
 import { connect } from "react-redux";
 import PostCard from "./PostCard";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const PostCardList = ({ user, posts, setPosts }) => {
 	const removePost = async (postID) => {
 		try {
-			await axios.delete(`http://localhost:5000/posts/${postID}`);
+			await axios.delete(`/posts/${postID}`);
 			let modified = posts.filter((post) => post._id !== postID);
 			setPosts(modified);
 		} catch (error) {
@@ -16,23 +17,40 @@ const PostCardList = ({ user, posts, setPosts }) => {
 
 	const editPost = async ({ postID, body }) => {
 		try {
-			const res = await axios.patch(`http://localhost:5000/posts/${postID}`, {
+			const res = await axios.patch(`/posts/${postID}`, {
 				body,
 			});
 			let modified = posts.map((post) =>
 				post._id === postID ? res.data : post
 			);
 			setPosts(modified);
+			toast.success("Uspješno promjenjena objava! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
 	const updateLikes = async (postID) => {
 		try {
-			const res = await axios.patch(
-				`http://localhost:5000/posts/like/${postID}`
-			);
+			const res = await axios.patch(`/posts/like/${postID}`);
+
 			let modified = posts.map((post) =>
 				post._id === postID ? { ...post, postLikes: res.data } : post
 			);
@@ -40,6 +58,15 @@ const PostCardList = ({ user, posts, setPosts }) => {
 			setPosts(modified);
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 

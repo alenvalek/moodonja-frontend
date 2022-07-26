@@ -5,7 +5,7 @@ import styles from "./Chat.module.css";
 import { io } from "socket.io-client";
 import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
-import { useLocation } from "react-router-dom";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 // socket
 const socket = io.connect("http://localhost:5000");
@@ -19,7 +19,11 @@ const Chat = ({ user }) => {
 	const [recepient, setRecepient] = useState(null);
 	const messageElement = useRef(null);
 	const [canDisconnect, setCanDisconnect] = useState(false);
-	const location = useLocation();
+
+	// add friend logic
+	const [receiveFriendRequest, setReceiveFriendRequest] = useState(false);
+	const [acceptedFriendRequest, setAcceptedFriendRequset] = useState(false);
+	const [sentFriendRequest, setSentFriendRequest] = useState(false);
 
 	const lookForChat = () => {
 		setError("");
@@ -48,6 +52,24 @@ const Chat = ({ user }) => {
 		]);
 	};
 
+	const handleSentFriendRequest = () => {
+		setSentFriendRequest(true);
+		socket.emit("send-friend-request", {
+			socketID: recepient.recepient.socketID,
+		});
+	};
+
+	const acceptFriendRequest = () => {
+		setAcceptedFriendRequset(true);
+		setReceiveFriendRequest(false);
+		setSentFriendRequest(false);
+		socket.emit("accept-friend-request", {
+			socketID: recepient.recepient.socketID,
+			recepientUserID: recepient.recepient.userID,
+			userID: user._id,
+		});
+	};
+
 	useEffect(() => {
 		let recepient = null;
 		socket.on("private-chat-receive", (data) => handleReceiveMsg(data));
@@ -71,6 +93,17 @@ const Chat = ({ user }) => {
 			setCanDisconnect(false);
 			setError("User has disconnected from the chat");
 		});
+
+		socket.on("receive-friend-request", () => {
+			setReceiveFriendRequest(true);
+		});
+
+		socket.on("accepted-friend-request", () => {
+			setAcceptedFriendRequset(true);
+			setReceiveFriendRequest(false);
+			setSentFriendRequest(false);
+		});
+
 		return () => {
 			if (recepient) {
 				socket.emit("private-chat-disconnect", {
@@ -124,6 +157,11 @@ const Chat = ({ user }) => {
 					<Grid item xs={12} textAlign='center'>
 						<Card elevation={12} sx={{ margin: "1rem" }}>
 							<div className={styles.chatContainer}>
+								<div className={styles.messageContainerSys}>
+									<div className={styles.msgSys}>
+										<p>Uspješno povezani s nasumičnim korisnikom</p>
+									</div>
+								</div>
 								{messages &&
 									messages.length > 0 &&
 									messages.map((message) =>
@@ -147,6 +185,33 @@ const Chat = ({ user }) => {
 											</div>
 										)
 									)}
+								{receiveFriendRequest && !acceptedFriendRequest && (
+									<div className={styles.messageContainerSys}>
+										<div className={styles.msgSys}>
+											<p>Korisnik želi biti vaš prijatelj</p>
+											<Button
+												variant='contained'
+												color='success'
+												onClick={acceptFriendRequest}>
+												Prihvati
+											</Button>
+										</div>
+									</div>
+								)}
+								{sentFriendRequest && !acceptedFriendRequest && (
+									<div className={styles.messageContainerSys}>
+										<div className={styles.msgSys}>
+											<p>Poslali ste zahtjev za prijateljstvo..</p>
+										</div>
+									</div>
+								)}
+								{acceptedFriendRequest && (
+									<div className={styles.messageContainerSys}>
+										<div className={styles.msgSys}>
+											<p>Vi i korisnik ste sada prjatelji</p>
+										</div>
+									</div>
+								)}
 								<div ref={messageElement}></div>
 							</div>
 							<div className={styles.inputs}>
@@ -156,6 +221,12 @@ const Chat = ({ user }) => {
 									onChange={(e) => setNewMessage(e.target.value)}></input>
 								<button className='btn btn-primary' onClick={handleSendMessage}>
 									<SendIcon />
+								</button>
+								<button
+									disabled={sentFriendRequest || receiveFriendRequest}
+									className={styles.btnAdd}
+									onClick={handleSentFriendRequest}>
+									<GroupAddIcon />
 								</button>
 							</div>
 						</Card>

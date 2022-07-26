@@ -23,7 +23,7 @@ const Dashboard = ({ user, loading }) => {
 
 	const handleSubmit = async () => {
 		try {
-			await axios.patch("http://localhost:5000/users", {
+			await axios.patch("/users", {
 				bio: editableBio,
 				username: editableUsername,
 			});

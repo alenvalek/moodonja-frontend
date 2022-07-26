@@ -20,11 +20,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styles from "./PostDetails.module.css";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import SendIcon from "@mui/icons-material/Send";
 import { connect } from "react-redux";
 import axios from "axios";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 const PostDetails = ({ user }) => {
 	const id = useParams().id;
@@ -39,7 +40,7 @@ const PostDetails = ({ user }) => {
 
 	const fetchPost = async () => {
 		try {
-			const res = await axios.get(`http://localhost:5000/posts/${id}`);
+			const res = await axios.get(`/posts/${id}`);
 			setPost(res.data);
 
 			setEditBody(res.data.body);
@@ -50,35 +51,113 @@ const PostDetails = ({ user }) => {
 		setLoading(false);
 	};
 
+	const handleDeleteComment = async (comment_id) => {
+		try {
+			const res = await axios.delete(`/posts/comment/${id}/${comment_id}`);
+			setPost(res.data);
+			toast.success("Uspješno izbrisan komentar! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		} catch (error) {
+			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	};
+
 	const removePost = async () => {
 		try {
-			await axios.delete(`http://localhost:5000/posts/${id}`);
+			await axios.delete(`/posts/${id}`);
+			toast.success("Uspješno izbrisana objava! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 			navigate("/home");
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
 	const editPost = async () => {
 		try {
-			const res = await axios.patch(`http://localhost:5000/posts/${id}`, {
+			const res = await axios.patch(`/posts/${id}`, {
 				body: editBody,
 			});
 			setPost(res.data);
+			toast.success("Uspješno uređena objava! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 	};
 
 	const createComment = async () => {
 		try {
-			const res = await axios.patch(
-				`http://localhost:5000/posts/comment/${id}`,
-				{ body }
-			);
+			const res = await axios.patch(`/posts/comment/${id}`, { body });
 			setPost(res.data);
+			toast.success("Uspješno dodan novi komentar! 🤩", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		} catch (error) {
 			console.log(error);
+			toast.error("Nešto je puklo.. 😥", {
+				position: "bottom-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		}
 		setBody("");
 	};
@@ -200,9 +279,18 @@ const PostDetails = ({ user }) => {
 										<Typography variant='caption' color='text.secondary'>
 											{moment(comment.createdAt).fromNow()}
 										</Typography>
-										<Grid item xs={12} md={12} marginTop={1}>
+										<Grid item xs={10} md={10} marginTop={1}>
 											<Typography variant='body2'>{comment.body}</Typography>
 										</Grid>
+										{user && user._id === comment.user._id && (
+											<Grid item xs={2} md={2} marginTop={1}>
+												<IconButton
+													color='error'
+													onClick={(e) => handleDeleteComment(comment._id)}>
+													<DeleteForeverIcon />
+												</IconButton>
+											</Grid>
+										)}
 									</Grid>
 									<Divider variant='middle' />
 								</CardContent>
