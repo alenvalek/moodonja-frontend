@@ -18,9 +18,6 @@ const Navbar = ({ isAuth, userLoading, user, logoutUser }) => {
 						<Link to='/'>Početna</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Link to='/faq'>FAQ</Link>
-					</li>
-					<li className='nav__list__item'>
 						<Link to='/login'>Prijava</Link>
 					</li>
 					<li className='nav__list__item'>
@@ -47,7 +44,7 @@ const Navbar = ({ isAuth, userLoading, user, logoutUser }) => {
 						<Link to='/dashboard'>Dashboard</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Link to='/friends'>Prijatelji</Link>
+						<Link to='/chat'>Chat</Link>
 					</li>
 					<li className='nav__list__item'>
 						<Avatar>{user && user.username[0].toUpperCase()}</Avatar>

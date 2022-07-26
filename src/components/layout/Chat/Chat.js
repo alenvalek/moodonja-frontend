@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 
 // socket
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("https://moodonja.herokuapp.com");
 
 const Chat = ({ user }) => {
 	const [isLookingForChat, setIsLookingForChat] = useState(false);
