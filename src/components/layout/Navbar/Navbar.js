@@ -18,9 +18,6 @@ const Navbar = ({ isAuth, userLoading, user, logoutUser }) => {
 						<Link to='/'>Početna</Link>
 					</li>
 					<li className='nav__list__item'>
-						<Link to='/faq'>FAQ</Link>
-					</li>
-					<li className='nav__list__item'>
 						<Link to='/login'>Prijava</Link>
 					</li>
 					<li className='nav__list__item'>
