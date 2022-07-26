@@ -22,6 +22,9 @@ import { toast } from "react-toastify";
 const Home = ({ user }) => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [body, setBody] = useState("");
+	const [location, setLocation] = useState("");
+	const [isLocation, setIsLocation] = useState(false);
 
 	const fetchPosts = async () => {
 		try {
@@ -61,11 +64,10 @@ const Home = ({ user }) => {
 				progress: undefined,
 			});
 		}
+		setBody("");
+		setLocation("");
+		setIsLocation(false);
 	};
-
-	const [body, setBody] = useState("");
-	const [location, setLocation] = useState("");
-	const [isLocation, setIsLocation] = useState(false);
 
 	useEffect(() => {
 		if (user) {
