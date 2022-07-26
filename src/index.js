@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://moodonja.herokuapp.com/";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
