@@ -33,6 +33,9 @@ Mentor: doc.dr.sc.Nikola Tanković
 - [MUI](https://mui.com)
 - [SocketIO](https://socket.io)
 
+### Javni link na aplikaciju
+[Link na aplikaciju](https://moodonja.vercel.app/)
+
 ### Opis aplikacije
 Ova aplikacija namijena je za osobe koje se bore s mentalnim problemima i pokušavaju sačuvati
 svoje mentalno zdravlje. Naime, glavna značajka aplikacija je anonimno čavrljanje s drugim
@@ -58,3 +61,5 @@ imaju mogućnost personalizacije profila novim korisničkim imenom ili promjenom
 slike i biografije. Korisnicima su vidljivi samo profili / post-ovi korisnika koji su im u listi
 prijatelja koje su dodali kroz chat,što je glavna unikatnost aplikacije, s obzirom da nema drugog
 načina za dodati druge prijatelje.
+
+
