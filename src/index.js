@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://moodonja.herokuapp.com/";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
